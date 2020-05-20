@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    !-- 黑色 -->
+    <color name="black">#000000</color>
+    <color name="main_color">#108FEA</color>
+    <color name="status_bar_white">#FFFFFF</color>
+</resources>

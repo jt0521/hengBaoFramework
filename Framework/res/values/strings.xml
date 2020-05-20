@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">Framework</string>
+    <string name="listview_header_last_time">上一次刷新：</string>
+    <string name="listview_header_last_time_no">未刷新</string>
+    <string name="listview_header_hint_normal">下拉刷新</string>
+    <string name="header_hint_refresh_ready">松开刷新</string>
+    <string name="header_hint_refresh_loading">正在刷新&#8230;</string>
+    <string name="footer_hint_load_normal">Load more</string>
+    <string name="footer_hint_load_ready">Release to load more</string>
+</resources>
