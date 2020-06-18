@@ -1,6 +1,7 @@
 package com.core.framework.net;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.core.framework.app.MyApplication;
 import com.core.framework.develop.LogUtil;
@@ -158,6 +159,7 @@ public class NetworkWorker {
     private class BaseCallback extends StringCallback {
 
         public Object[] mParam;
+        public int code;
         public Object mHashMapParam;
         public ICallback mICallBack;
 
@@ -168,9 +170,15 @@ public class NetworkWorker {
         }
 
         @Override
+        public boolean validateReponse(Response response, int id) {
+            code = response.code();
+            return super.validateReponse(response, id);
+        }
+
+        @Override
         public void onError(Call call, Exception e, int id) {
             int status = NATIVE_ERROR;
-            String result = e == null ? "网络错误" : e.getCause() == null ? e.getMessage() : e.getCause().getMessage();
+            String result = e == null ? "服务器异常" : e.getCause() == null ? e.getMessage() : e.getCause().getMessage();
             if (e instanceof UnknownHostException) {
                 status = UNKNOWN_HOST;
             } else if (e instanceof InterruptedIOException) {
@@ -178,8 +186,19 @@ public class NetworkWorker {
             } else if (e instanceof TimeoutException && result == null) {
                 result = "连接超时";
             }
-            if (result == null) {
-                result = "网络错误";
+            switch (code) {
+                case 401:
+                    result = "登录过期";
+                    break;
+                case 404:
+                    result = "网络请求不存在";
+                    break;
+                default:
+                    result = "服务器异常";
+                    break;
+            }
+            if (MyApplication.getInstance() != null) {
+                Toast.makeText(MyApplication.getInstance(), result, Toast.LENGTH_SHORT).show();
             }
             NetLog.onFailure(call, id, e);
             onResponse(status, result);
