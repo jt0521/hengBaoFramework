@@ -187,6 +187,9 @@ public class NetworkWorker {
                 result = "连接超时";
             }
             switch (code) {
+                case 400:
+                    result = "参数错误";
+                    break;
                 case 401:
                     result = "登录过期";
                     break;
